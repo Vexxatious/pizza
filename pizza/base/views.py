@@ -9,7 +9,7 @@ import datetime
 
 def home(request):
     context = {}
-    menu = Menu.objects.get(isim = "Menü 1")
+    menu = Menu.objects.get(isim = "Menü (Lütfen Menüyü Buraya Yükleyiniz)")
     anasayfa = Sayfa.objects.get(isim = "Anasayfa" )
     hikayemiz = Sayfa.objects.get(isim = "Hikayemiz")
     nilgun_cahit = Sayfa.objects.get(isim = "Nilgün & Cahit")
@@ -54,7 +54,7 @@ def home(request):
         print(date, file = sys.stderr)
     
     
-        adress_to_send = MailAdresi.objects.all()[0].adres
+        adresses_to_send = [x.adres for x in MailAdresi.objects.all()]
 
         site = get_current_site(request)
         message = render_to_string('templates/mail.html', {
@@ -68,7 +68,7 @@ def home(request):
                     })
         mail_subject = 'Rezervasyon Bildirimi'
         email = EmailMessage(
-            mail_subject, message, to=[adress_to_send]
+            mail_subject, message, to=adresses_to_send
         )
         email.send()
 
