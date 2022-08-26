@@ -12,7 +12,6 @@ def home(request):
     menu = Menu.objects.get(isim = "Menü (Lütfen Menüyü Buraya Yükleyiniz)")
     anasayfa = Sayfa.objects.get(isim = "Anasayfa" )
     hikayemiz = Sayfa.objects.get(isim = "Hikayemiz")
-    nilgun_cahit = Sayfa.objects.get(isim = "Nilgün & Cahit")
     rezervasyon = Sayfa.objects.get(isim = "Rezervasyon")
     iletisim = Sayfa.objects.get(isim = "İletişim")
 
@@ -27,10 +26,6 @@ def home(request):
     context["hikayemiz_yazi"] = hikayemiz.yazi
     context["hikayemiz_fotograf"] = hikayemiz.fotograf_tag()
 
-    context["nilgun_cahit_baslik"] = nilgun_cahit.baslik
-    context["nilgun_cahit_yazi"] = nilgun_cahit.yazi
-    context["nilgun_cahit_fotograf"] = nilgun_cahit.fotograf_tag()
-    context["nilgun_cahit_arkaplan"] = nilgun_cahit.arkaplan_tag()
 
     context["rezervasyon_baslik"] = rezervasyon.baslik
     context["rezervasyon_yazi"] = rezervasyon.yazi
