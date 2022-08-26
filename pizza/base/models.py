@@ -58,3 +58,11 @@ class GaleriFoto(models.Model):
     def __str__(self):
         return self.isim
     
+
+class MailAdresi(models.Model):
+    class Meta:  
+        verbose_name_plural = 'Mail Adresi'
+    
+    adres = models.CharField(max_length=100)
+    def __str__(self):
+        return self.adres

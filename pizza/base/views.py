@@ -1,7 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
-from base.models import Sayfa, GaleriFoto, Menu
+from base.models import MailAdresi, Sayfa, GaleriFoto, Menu
 import sys
+from django.template.loader import render_to_string
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import EmailMessage
+import datetime
 # Create your views here.
 
 def home(request):
@@ -38,5 +41,39 @@ def home(request):
     context["iletisim_arkaplan"] = iletisim.arkaplan_tag()
 
     context["sliders"] = sliders
+
+
+    if request.method == "POST":
+        print(request.POST, file = sys.stderr)
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        phone = request.POST.get("phone")
+        date = datetime.datetime.strptime(request.POST.get("date").replace("T"," "), "%Y-%m-%d %H:%M")
+        date = date.strftime("%d-%m-%Y %H:%M")
+        people = request.POST.get("people")
+        print(date, file = sys.stderr)
+    
+    
+        adress_to_send = MailAdresi.objects.all()[0].adres
+
+        site = get_current_site(request)
+        message = render_to_string('templates/mail.html', {
+                        'protocol': 'http',
+                        'domain': site.domain,
+                        'name': name,
+                        'email': email,
+                        'phone' : phone,
+                        'date': date,
+                        'people': people
+                    })
+        mail_subject = 'Rezervasyon Bildirimi'
+        email = EmailMessage(
+            mail_subject, message, to=[adress_to_send]
+        )
+        email.send()
+
+        
+
+
 
     return render(request, "templates/index.html",context)

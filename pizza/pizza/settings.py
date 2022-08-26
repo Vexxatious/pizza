@@ -16,6 +16,15 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 SETTINGS_PATH = os.path.dirname(os.path.dirname(__file__))
 
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'laudasfotware@gmail.com'
+EMAIL_HOST_PASSWORD = 'mtzzkoptjxnpggnt'
+EMAIL_PORT = 587
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
@@ -25,7 +34,10 @@ SECRET_KEY = 'django-insecure-s5b_6$^j+xg(hoyor&mt-10guuw)2d0up_m=_*g5ruxm)=-8_)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','127.0.0.1:9000']
+CSRF_TRUSTED_ORIGINS = [
+    'http://127.0.0.1'
+]
 
 AUTH_USER_MODEL = 'base.User'
 
@@ -50,6 +62,12 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+
+CSRF_COOKIE_DOMAIN = None
+
+
 
 ROOT_URLCONF = 'pizza.urls'
 
